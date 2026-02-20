@@ -4,7 +4,7 @@ Created for Unit 2, Activity 5
 
 19/2/2026 To do:
 - [x] Implement StateOutlines and Natives1870 geojsons
-- [] Redesign leaflet popup information
-- [] Write historical blurb explaining data
-- [] Redesign layout
-- [] Implement time series functionality 
+- [ ] Redesign leaflet popup information
+- [ ] Write historical blurb explaining data
+- [ ] Redesign layout
+- [ ] Implement time series functionality 

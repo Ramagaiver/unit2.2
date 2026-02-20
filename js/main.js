@@ -43,7 +43,7 @@ function loadData(){
     const geojsonData = [
     'data/Natives1870.geojson',
     'data/StateOutlines.geojson',
-    'data/MormonSettlements.geojson' // This data was used with permission of Brandon Plewe, 2025
+    'data/AdjustedMormonSettlements.geojson' // This data was used with permission of Brandon Plewe, 2025
     ];  
 
     for (path of geojsonData){
@@ -55,18 +55,13 @@ function loadData(){
             .then(console.log("Fetched " + path))
 
             .then(function(json){
-                var geojsonMarkerOptions = {
-                    radius: 8,
-                    fillColor: "#ff7800",
-                    color: "#000",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                };
-
                     L.geoJson(json, {
                         pointToLayer: function(feature, latlng){
-                            return L.circleMarker(latlng, geojsonMarkerOptions);
+                            if (feature.properties.periodized === true){
+                                return L.circleMarker(latlng, definitiveSettlement);
+                            } else {
+                                return L.circleMarker(latlng, approximateSettlement);
+                            }
                         },
                         onEachFeature: onEachFeature
                     }).addTo(map)} )

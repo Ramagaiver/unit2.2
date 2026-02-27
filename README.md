@@ -7,4 +7,5 @@ Created for Unit 2, Activity 5
 - [ ] Redesign leaflet popup information
 - [ ] Write historical blurb explaining data
 - [ ] Redesign layout
-- [ ] Implement time series functionality 
+- [X] Implement time series functionality - Completed 27/02/2026
+- [ ] Link calculateStats to createLegend

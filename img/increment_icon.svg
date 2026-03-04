@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <g>
+    <polygon points=".5 1 119.17 90 .5 179 .5 1"/>
+    <path d="M1,2l117.33,88L1,178V2M0,0v180l120-90L0,0h0Z"/>
+  </g>
+  <g>
+    <polygon points="60.5 1 179.17 90 60.5 179 60.5 1"/>
+    <path d="M61,2l117.33,88-117.33,88V2M60,0v180l120-90L60,0h0Z"/>
+  </g>
+</svg>

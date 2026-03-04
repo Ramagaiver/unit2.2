@@ -12,19 +12,45 @@
 
     <body>
         <main class="container">
-            <div id="logo">Logo Here</div>
+            <div id="logo">Placeholder</div>
             <h1 id="title">Continuity and Discontinuity of Mormon Places: Settlement of Utah, 1847-1900</h1>
-            <div id="email">Have any questions or requests for data?</div>
+            <div id="email">Placeholder</div>
             <h2 id="sub-title">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</h2>
             <div id="summary-mapArea">
                 <div id="map"></div>
-                <!-- <h3 id="map-title">Tempus leo eu aenean sed</h3> -->
-                <!-- <div id="zoom-controls">Zoom Controls Here</div> -->
+                <div class="sequence-controller" id="sequence-control-container">
+                    <input id="range-slider" type="range" min="1" max="19358" value="19358" step="1"></input>
+                    <button class="sequence-controls" id="reverse" title="Reverse"><img class="step-img" src="img/definitive_mormon_settlement.svg" alt="Reverse Icon"></button>
+                    <button class="sequence-controls" id="start-stop" title="Play"><img class="step-img" src="img/definitive_mormon_settlement.svg" alt="Start-Stop Icon"></button>
+                    <button class="sequence-controls" id="forward" title="Forward"><img class="step-img" src="img/definitive_mormon_settlement.svg" alt="Forward Icon"></button>
+
+                    <select class="sequence-controls" id="sequence-increment">
+                        <option value="day">Events every: day</option>
+                        <option value="week">Events every: week</option>
+                        <option value="month">Events every: month</option>
+                        <option value="year">Events every: year</option>
+                    </select>
+                </div>
+                <div class="legend" id="legend-container">
+                    <p id="legend-title">Legend</p>
+                    <p id="date">Date Placeholder</p>
+                    <svg id="attribute-legend">
+                        <circle class="legend-circle" id="max" r="60" cy="65" cx="61"></circle>
+                        <text class="circle-text" id="max-text" x="130" y="35">Max Date</text>
+
+                        <circle class="legend-circle" id="mean" r="40" cy="85" cx="61"></circle>
+                        <text class="circle-text" id="mean-text" x="130" y="70">Mean Date</text>
+
+                        <circle class="legend-circle" id="min" r="20" cy="105" cx="61"></circle>
+                        <text class="circle-text" id="min-text" x="130" y="105">Min Date</text>
+                    </svg>
+                </div>
             </div>
             <div id="credits"></div>
             <div id="notes"></div>
         </main>
 
+        <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/styles.js"></script>

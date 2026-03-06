@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title>The Settlement of Utah: Continuity and Discontinuity of Mormon Places, 1847-1900</title>
+        <title>Mormon Places and the Natives: Settlement of Utah, 1847-1900</title>
         <meta author="Chanodom Tannarat">
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -16,7 +16,7 @@
     <body>
         <main class="container">
             <div id="logo">Placeholder</div>
-            <h1 id="title">Continuity and Discontinuity of Mormon Places: Settlement of Utah, 1847-1900</h1>
+            <h1 id="title">Mormon Site Catchment and Native Dispossession: Utah, 1847-1900</h1>
             <div id="email">Placeholder</div>
             <h2 id="sub-title">This project utilizes data from MormonPlaces, a comprehensive database of historical locations derived from Mapping Mormonism. Explore the development of Mormon settlements and their geographic relationship with Indigenous tribal lands from 1847 to 1900.</h2>
             <div id="summary-mapArea">
@@ -34,33 +34,61 @@
                         <option value="year">Events every: year</option>
                     </select>
                 </div>
+
+                <button type="button" id="legend-button">></button>
+
                 <div class="legend" id="legend-container">
                     <p id="legend-title">Legend</p>
-                    <p id="attribute-text">Calculated from the cumulative duration of occupation following definitive establishment of a site. Any abandon- ment or displacement, whether due to environmental, social, or conflict-driven factors, resets the sites' age to zero until resettlement occurs.</p>
-                    <button type="button">Click Me!</button>
+                    <div class="proportional-elements">
+                        <svg class="proportional-elements" id="proportional-legend">
+                            <circle class="legend-circle" id="max" r="60" cy="65" cx="61"></circle>
+                            <text class="circle-label" x="61" y="32.5">Max</text>
+                            <text class="circle-text" id="max-date" x="130" y="35">Max Date</text>
 
-                    <svg id="attribute-legend">
-                        <circle class="legend-circle" id="max" r="60" cy="65" cx="61"></circle>
-                        <text class="circle-label" x="61" y="32.5">Max</text>
-                        <text class="circle-text" id="max-date" x="130" y="35">Max Date</text>
+                            <circle class="legend-circle" id="mean" r="40" cy="85" cx="61"></circle>
+                            <text class="circle-label" x="61" y="70">Mean</text>
+                            <text class="circle-text" id="mean-date" x="130" y="70">Mean Date</text>
 
-                        <circle class="legend-circle" id="mean" r="40" cy="85" cx="61"></circle>
-                        <text class="circle-label" x="61" y="70">Mean</text>
-                        <text class="circle-text" id="mean-date" x="130" y="70">Mean Date</text>
-
-                        <circle class="legend-circle" id="min" r="20" cy="105" cx="61"></circle>
-                        <text class="circle-label" x="61" y="105">Min</text>
-                        <text class="circle-text" id="min-date" x="130" y="105">Min Date</text>
-                    </svg>
+                            <circle class="legend-circle" id="min" r="20" cy="105" cx="61"></circle>
+                            <text class="circle-label" x="61" y="105">Min</text>
+                            <text class="circle-text" id="min-date" x="130" y="105">Min Date</text>
+                        </svg>
+                        <p class="legend-labels">Settlement Continuity</p>
+                        <p class="legend-text">Proportional symbols indicate the cumulative duration of continuous occupation calculated following definitive establishment. Any abandonment or displacement, whether due to environmental, social, or conflict-driven factors, resets the sites' age until resettlement occurs.</p>
+                    </div>
+                    <div id="symbol-elements" alt="has-divider">
+                        <div class="status-item">
+                            <img src="img/mormon_settlement.svg" class="legend-icon definitive-settlement" alt="Definitive Icon">
+                            <p class="legend-labels">Definitive Site</p>
+                        </div>
+                        <div class="status-item">
+                            <img src="img/mormon_settlement.svg" class="legend-icon approximate-settlement" alt="Approximate Icon">
+                            <p class="legend-labels">Approximate Site</p>
+                        </div>
+                    </div>
+                    <div id="native-symbol-elements">
+                        <div class="status-item">
+                            <img src="img/natives.svg" class="legend-icon" alt="Native Icon">
+                            <p class="legend-labels">Site Extent</p>
+                        </div>
+                        <div class="status-item">
+                            <img src="img/natives.svg" class="legend-icon" alt="Native Icon Alt">
+                            <p class="legend-labels">Native Bands</p>
+                        </div>
+                    </div>
                 </div>
 
                 <p id="date">Date Placeholder</p>
+                <button type ="button" id="settings-button">x</button>
 
-                <div class="settings-control">
+                <div class="settings-container" id="settings-control">
+                    <p id="settings-title">Settings</p>
                     <label for="cluster-toggle">Clustered Symbols</label>
-                    <input type="checkbox" id="cluster-toggle" checked>
+                    <input type="checkbox" id="cluster-toggle">
+                    <p class="settings-text">The volume and density of sites in certain areas of Utah can easily become overbearing. Consider enabling clustered symbologies to improve reada- bility at smaller scales.</p>
                     <label for="cluster-toggle">Proportional Symbols</label>
-                    <input type="checkbox" id="cluster-toggle" checked>
+                    <input type="checkbox" id="proportional-toggle" checked>
+                    <p class="settings-text">Proportional site symbols indicate the duration of continuous occupation.</p>
                 </div>
             </div>
             <div id="credits"></div>

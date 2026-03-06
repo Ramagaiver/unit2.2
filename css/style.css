@@ -42,22 +42,6 @@
     padding: 0;
 }
 
-/* SETTINGS */
-
-.settings-control {
-    background-color: white; /* Change from red for better visibility */
-    position: absolute;      /* Ensure it stays relative to summary-mapArea */
-    top: 10px;               /* Move it to a corner */
-    right: 10px;
-    width: auto;             /* Let it shrink to fit the content */
-    height: auto;
-    z-index: 1001;           /* Must be higher than 1000 to clear map panes */
-    padding: 10px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    font-family: Arial, sans-serif;
-}
-
 /* SUMMARY MAP */
 /* SUMMARY MAP */
 
@@ -68,6 +52,61 @@
     left: 10px;
     right: 10px;
     bottom: 42px;
+}
+
+/* SETTINGS */
+
+.settings-container {
+    background-color: white;
+    position: absolute;
+    bottom: 78px;
+    left: 10px;
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    z-index: 1001;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    opacity: 1;
+    border-radius: 4px;
+}
+
+#settings-title{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000; 
+    font-size: 26px;
+    margin: 0;
+    padding: 0;
+}
+
+.settings-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    color: #555;
+    font-size: 13px;
+    margin: 0;
+    /* padding: 5px; */
+}
+
+#settings-button {
+    /* background-color: red; */
+    position: absolute;
+    left: 300px;
+    bottom: 248px;
+    width: 20px;
+    height: 20px;
+    z-index: 1010;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: 1;
+
+    background-color: #fff;
+
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
 }
 
 /* SEQUENCE */
@@ -81,7 +120,6 @@
     z-index: 1000;
 
     background-color: #fff;
-    border: solid gray 1px;
 
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-top-left-radius: 4px;
@@ -90,13 +128,13 @@
 }
 
 #date {
-    background-color: white; /* Change from red for better visibility */
-    position: absolute;      /* Ensure it stays relative to summary-mapArea */
-    left: 10px;               /* Move it to a corner */
-    bottom: 62px;
-    width: auto;             /* Let it shrink to fit the content */
+    background-color: white;
+    position: absolute;
+    left: 10px;
+    bottom: 273px;
+    width: auto;
     height: auto;
-    z-index: 1001;           /* Must be higher than 1000 to clear map panes */
+    z-index: 1001;
     padding: 5px;
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -128,6 +166,22 @@
 
 /* LEGEND */
 
+#legend-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    z-index: 1010;
+}
+
 .legend-control-container {  
     width: auto;  
     height: 350px;  
@@ -138,6 +192,10 @@
     border: solid gray 1px;  
 }  
 
+.legend p {
+    margin: 0; 
+}
+
 .legend {
     position: absolute;
     bottom: 10px;
@@ -147,47 +205,42 @@
     background-color: #fff;
     border: solid gray 1px;
     width: 350px;
-    height: 400px;
+    height: auto;
 
     border: 2px solid rgba(0, 0, 0, 0.2);
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
 }
 
-#legend-title {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: red;
-
+.legend-labels {
     font-family: Arial, Helvetica, sans-serif;
     color: #000; 
-    font-size: 26px;
+    font-size: 16px;
     margin: 0;
     padding: 0;
 }
-
-#attribute-text {
-    position: absolute;
-    top: 182px;
-    left: 10px;
-    /* background: red; */
-
+.legend-text {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
     color: #555;
     font-size: 13px;
     margin: 0;
-    padding: 0;
 }
 
-#attribute-legend{
-    position: absolute;
-    top: 42px;
-    left: 10px;
+#legend-title {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000; 
+    font-size: 24px;
+    margin: 0;
+}
 
-    /* background-color: red; */
-    width: 335px;
+#proportional-legend{
+    width: 100%;
     height: 130px;
 }
 
@@ -215,6 +268,33 @@
     font-size: 12px;
     margin: 0;
     padding: 0;
+}
+#symbol-elements, #native-symbol-elements {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 10px 0 0px 5px;
+}
+
+#symbol-elements {
+    border-top: 1px solid #ddd;
+    margin-top: 5px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.status-item .legend-labels {
+    font-size: 14px;
 }
 
 /* SUMMARY FOOTER */
@@ -280,7 +360,7 @@
 /* SETTLEMENT CLUSTER SYMBOLOGY */
 
 .settlement-cluster {
-    background-color: rgba(97, 165, 245, 1); /* Blueish tint like your legend */
+    background-color: rgba(97, 165, 245, 1);
     border: 2px solid #325780;
     border-radius: 50%; /* Keeps it a circle */
     display: flex;
@@ -288,7 +368,7 @@
     justify-content: center;
 }
 
-/* The text showing the count inside the cluster */
+/* Text showing the count inside cluster */
 .settlement-cluster span {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;

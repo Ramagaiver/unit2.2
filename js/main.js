@@ -5,13 +5,13 @@ const geojsonData = [
 'data/studyArea.geojson'
 ];  
 
-var proportionalSymbols = true
+let proportionalSymbols = true
+let clusteredSymbols = false
 
 // Global variable for settlement data
 var mormonSettlementData;
-
-// Global map variable
 var map;
+var clusterGroup;
 
 function createMap(){
     // Creates the map
@@ -108,15 +108,15 @@ function createPopupContent(feature, layer){
 
                 if (feature.properties.periodized === true){
                     popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
-                    `${startDate} to ${endDate}` + "<br><br>" + 
-                    `Established for ${yearRange} years` + "<br><br>" + feature.properties.description + "<br><br>" + 
-                    feature.properties.source + "</p>"
+                    `Established on ${startDate}.` + "<br><br>" + 
+                    `Occupied for ${yearRange} years total,` + "<br>" + `${startDate} to ${endDate}.` + "<br><br>" + feature.properties.description + "<br><br>" + 
+                    `Source: ${feature.properties.source}.` + "</p>"
                 }
 
                 else {
                     popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
                     `Established some time between ${startDate} and ${endDate}` + 
-                    "<br><br>" + feature.properties.description + "<br><br>" + feature.properties.source + "</p>"
+                    "<br><br>" + feature.properties.description + "<br><br>" + `Source: ${feature.properties.source}.` + "</p>"
                 }
 
                 layer.bindPopup(popupContent, { 
@@ -174,6 +174,7 @@ function loadData(){
 
                         let initialDate = new Date(1900, 0, 0);
                         sequenceControls();
+                        otherButtons();
                         updateSettlementSymbols(initialDate);
                     }
 
@@ -345,6 +346,15 @@ function updateSettlementSymbols(currentDate){
                     className: isPeriodized ? 'definitive-settlement' : 'approximate-settlement'
 
                 }));
+            } else {
+                let isPeriodized = props.periodized === true;
+
+                layer.setIcon(L.icon({
+                    iconUrl: iconPath,
+                    iconSize: [10, 10], // Fixed size
+                    iconAnchor: [5, 5],
+                    className: isPeriodized ? 'definitive-settlement' : 'approximate-settlement'
+                }));
             }
             
             if (!map.hasLayer(layer)){
@@ -359,65 +369,151 @@ function updateSettlementSymbols(currentDate){
     })
 }
 
+// Function responsible for calculating statistics in legend
 function calculateStats(currentDate){
     var allAges = []
     var calculatedStats = {};
     
-    mormonSettlementData.eachLayer(function(layer){
-        // Calculate only from periodized localities
-        if (map.hasLayer(layer) && layer.feature.properties.periodized === true){
-            var props = layer.feature.properties
-            var startDate = new Date(props["start date"]);
+    // If proportionalSymbols is true, then do stat calculations
+    if (proportionalSymbols === true){
+        mormonSettlementData.eachLayer(function(layer){
+            // Calculate only from periodized localities
+            if (map.hasLayer(layer) && layer.feature.properties.periodized === true){
+                var props = layer.feature.properties
+                var startDate = new Date(props["start date"]);
 
-            var totalAge = (currentDate - startDate) / (1000 * 60 * 60 * 24);
-            if (totalAge >= 0){
-                allAges.push(totalAge);
-            }
-        }
-    })
-
-    if (allAges.length > 0){
-        // Stores the min, mean & max states in the local variable
-        calculatedStats.min = Math.min(...allAges);
-        calculatedStats.max = Math.max(...allAges);
-
-        // Calculate the mean
-        var sum = allAges.reduce(function(a, b){return a+b;});
-        calculatedStats.mean = sum/ allAges.length;
-
-        var circles = ["max", "mean", "min"];
-            for (var i = 0; i < circles.length; i++){
-                var key = circles[i];
-                var totalDays = calculatedStats[key];
-
-                // Calculate years and days
-                var years = Math.floor(totalDays / 365.25);
-                var remainingDays = Math.floor(totalDays % 365.25);
-
-                // String formatting
-                var yearLabel = years === 1 ? " year" : " years";
-                var dayLabel = remainingDays === 1 ? " day" : " days";
-                var dateString = `${years}${yearLabel} and ${remainingDays}${dayLabel}`;
-
-                // Applies max, mean and min values to respective html element
-                console.log(`Minimum: ${calculatedStats.min}, Mean: ${calculatedStats.mean}, Max: ${calculatedStats.max}`)
-                var textElement = document.getElementById(key + "-date");
-                if (textElement){
-                    textElement.textContent = dateString;
+                var totalAge = (currentDate - startDate) / (1000 * 60 * 60 * 24);
+                if (totalAge >= 0){
+                    allAges.push(totalAge);
                 }
             }
-    } 
-    
-    // This else statement handles all instances where there should be no presented value
-    else {
-        var circles = ["max", "mean", "min"];
-        for (var i = 0; i < circles.length; i++){
-            var textElement = document.getElementById(circles[i] + "-date");
-            if (textElement){
-                textElement.textContent = "0 years and 0 days";
+        })
+
+        if (allAges.length > 0){
+            // Stores the min, mean & max states in the local variable
+            calculatedStats.min = Math.min(...allAges);
+            calculatedStats.max = Math.max(...allAges);
+
+            // Calculate the mean
+            var sum = allAges.reduce(function(a, b){return a+b;});
+            calculatedStats.mean = sum/ allAges.length;
+
+            var circles = ["max", "mean", "min"];
+                for (var i = 0; i < circles.length; i++){
+                    var key = circles[i];
+                    var totalDays = calculatedStats[key];
+
+                    // Calculate years and days
+                    var years = Math.floor(totalDays / 365.25);
+                    var remainingDays = Math.floor(totalDays % 365.25);
+
+                    // String formatting
+                    var yearLabel = years === 1 ? " year" : " years";
+                    var dayLabel = remainingDays === 1 ? " day" : " days";
+                    var dateString = `${years}${yearLabel} and ${remainingDays}${dayLabel}`;
+
+                    // Applies max, mean and min values to respective html element
+                    console.log(`Minimum: ${calculatedStats.min}, Mean: ${calculatedStats.mean}, Max: ${calculatedStats.max}`)
+                    var textElement = document.getElementById(key + "-date");
+                    if (textElement){
+                        textElement.textContent = dateString;
+                    }
+                }
+        } 
+        
+        // This else statement handles all instances where there should be no presented value
+        else {
+            var circles = ["max", "mean", "min"];
+            for (var i = 0; i < circles.length; i++){
+                var textElement = document.getElementById(circles[i] + "-date");
+                if (textElement){
+                    textElement.textContent = "0 years and 0 days";
+                }
             }
         }
     }
+}
+
+// This is the function that handles the settings and legend buttons and related functionality
+function otherButtons(){
+    // Proportional symbols
+    document.querySelector('#proportional-toggle').onchange = function() {
+        // Update proportionalSymbols to match checkbox state
+        proportionalSymbols = this.checked;
+
+        // Get current date from slider to refresh icons
+        const slider = document.querySelector('#range-slider');
+        let currentDate = new Date(1847, 0, 0);
+        currentDate.setDate(currentDate.getDate() + parseInt(slider.value));
+
+        updateSettlementSymbols(currentDate);
+
+        // Grays out proportional legend information
+        const attributes = document.querySelector('.proportional-elements');
+        if (proportionalSymbols === false){    
+            attributes.style.opacity = "0.3";
+        } else {
+            attributes.style.opacity = "1";
+        }
+    };
+
+    // Legend visibility
+    let legendVisible = true
+    document.querySelector('#legend-button').onclick = function(){
+        const button = document.querySelector("#legend-button");
+        const legend = document.querySelector(".legend");
+
+        if (legendVisible === true){
+            legendVisible = false
+
+            legend.style.opacity = "0";
+            legend.style.pointerEvents = "none";
+            button.textContent = "<"
+        } else {
+            legendVisible = true
+
+            legend.style.opacity = "1";
+            legend.style.pointerEvents = "auto";
+            button.textContent = ">"
+        }
+    };
+
+    // Settings visibility
+    let settingsVisible = true
+    document.querySelector('#settings-button').onclick = function(){
+        const button = document.querySelector("#settings-button");
+        const settings = document.querySelector("#settings-control");
+        const date = document.querySelector("#date");
+
+        if (settingsVisible === false){
+            settingsVisible = true
+
+            settings.style.opacity = "1";
+            settings.style.pointerEvents = "auto";
+            button.textContent = "x"
+
+            date.style.bottom = "273px"; 
+
+            button.style.bottom = "248px";
+            button.style.left = "300px";
+            button.style.width = "20px";
+            button.style.height = "20px";
+        } else {
+            settingsVisible = false
+
+            settings.style.opacity = "0";
+            settings.style.pointerEvents = "none";
+            button.textContent = "i"
+
+            date.style.bottom = "62px"; 
+
+            button.style.bottom = "126px";
+            button.style.left = "10px";
+            button.style.width = "30px";
+            button.style.height = "30px";
+
+        }
+    };   
 }
 
 document.addEventListener('DOMContentLoaded',createMap)

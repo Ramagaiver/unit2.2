@@ -95,7 +95,7 @@
 /* LEGEND */
 
 .legend-control-container {  
-    width: 250px;  
+    width: auto;  
     height: 350px;  
     background-color: rgba(255,255,255,0.8);  
     padding: 10px;  
@@ -150,16 +150,17 @@
     position: absolute;
     top: 70px;
     left: 10px;
-    right: 10px;
+    /* right: 10px; */
 
-    width: 200px;
+    /* background-color: red; */
+    width: 335px;
     height: 150px;
 }
 
 .legend-circle {
     z-index: 1000;
     fill: #61a5f5;
-    fill-opacity: 0.8;
+    fill-opacity: 1;
     stroke: #325780;
     stroke-width: 1px;
 }
@@ -172,10 +173,20 @@
     padding: 0;
 }
 
+.circle-label {
+    text-anchor: middle; 
+    
+    font-family: Arial, Helvetica, sans-serif;
+    fill: #ffffff;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
 /* SUMMARY FOOTER */
 
 #map {
-    background: red;
+    /* background: red; */
     position: absolute;
     height: 100%;
     width: 100%;
@@ -189,3 +200,44 @@
 #notes {
     background-color: yellow;
 }
+
+/* MAP CLASSES */
+
+.my-polygon-label {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    -webkit-text-stroke: 3px white;
+    paint-order: stroke fill;
+}
+
+.definitive-settlement {
+    opacity: 1.0;
+}
+
+.approximate-settlement {
+    opacity: 0.4;
+}
+
+.territory {
+    stroke-width: 1px;
+    stroke-opacity: 1;
+}
+
+.territory-ute { fill: #ff7800; stroke: #ff7800; fill-opacity: 0.2; }
+.territory-northern-paiute { fill: #7070e5; stroke: #7070e5; fill-opacity: 0.2; }
+.territory-southern-paiute { fill: #d69db1; stroke: #d69db1; fill-opacity: 0.2; }
+.territory-goshute { fill: #bbd57b; stroke: #bbd57b; fill-opacity: 0.2; }
+.territory-northern-shoshone { fill: #dcb644; stroke: #dcb644; fill-opacity: 0.2; }
+.territory-western-shoshone { fill: #b883e1; stroke: #b883e1; fill-opacity: 0.2; }
+.territory-washoe { fill: #6dd292; stroke: #6dd292; fill-opacity: 0.2; }
+.territory-timbisha { fill: #c93fb9; stroke: #c93fb9; fill-opacity: 0.2; }
+.territory-maybe-shoshone { fill: #ecdaa3; stroke: #ecdaa3; fill-opacity: 0.2; }
+
+.territory-shoshone-n { fill: #dcb644; stroke: #dcb644; fill-opacity: 0.2; }
+
+.territory-default { fill: #3388ff; stroke: #3388ff; fill-opacity: 0.5; }

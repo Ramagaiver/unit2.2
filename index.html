@@ -20,9 +20,9 @@
                 <div id="map"></div>
                 <div class="sequence-controller" id="sequence-control-container">
                     <input id="range-slider" type="range" min="1" max="19358" value="19358" step="1"></input>
-                    <button class="sequence-controls" id="reverse" title="Reverse"><img class="step-img" src="img/definitive_mormon_settlement.svg" alt="Reverse Icon"></button>
-                    <button class="sequence-controls" id="start-stop" title="Play"><img class="step-img" src="img/definitive_mormon_settlement.svg" alt="Start-Stop Icon"></button>
-                    <button class="sequence-controls" id="forward" title="Forward"><img class="step-img" src="img/definitive_mormon_settlement.svg" alt="Forward Icon"></button>
+                    <button class="sequence-controls" id="reverse" title="Reverse"><img class="step-img" src="img/mormon_settlement.svg" alt="Reverse Icon"></button>
+                    <button class="sequence-controls" id="start-stop" title="Play"><img class="step-img" src="img/mormon_settlement.svg" alt="Start-Stop Icon"></button>
+                    <button class="sequence-controls" id="forward" title="Forward"><img class="step-img" src="img/mormon_settlement.svg" alt="Forward Icon"></button>
 
                     <select class="sequence-controls" id="sequence-increment">
                         <option value="day">Events every: day</option>
@@ -34,15 +34,21 @@
                 <div class="legend" id="legend-container">
                     <p id="legend-title">Legend</p>
                     <p id="date">Date Placeholder</p>
+                    <button type="button">Click Me!</button>
+                    <!-- <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"> -->
+
                     <svg id="attribute-legend">
                         <circle class="legend-circle" id="max" r="60" cy="65" cx="61"></circle>
-                        <text class="circle-text" id="max-text" x="130" y="35">Max Date</text>
+                        <text class="circle-label" x="61" y="32.5">Max</text>
+                        <text class="circle-text" id="max-date" x="130" y="35">Max Date</text>
 
                         <circle class="legend-circle" id="mean" r="40" cy="85" cx="61"></circle>
-                        <text class="circle-text" id="mean-text" x="130" y="70">Mean Date</text>
+                        <text class="circle-label" x="61" y="70">Mean</text>
+                        <text class="circle-text" id="mean-date" x="130" y="70">Mean Date</text>
 
                         <circle class="legend-circle" id="min" r="20" cy="105" cx="61"></circle>
-                        <text class="circle-text" id="min-text" x="130" y="105">Min Date</text>
+                        <text class="circle-label" x="61" y="105">Min</text>
+                        <text class="circle-text" id="min-date" x="130" y="105">Min Date</text>
                     </svg>
                 </div>
             </div>

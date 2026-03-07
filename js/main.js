@@ -4,7 +4,7 @@ const geojsonData = [
 'data/baseNatives.geojson',
 'data/lakeData.geojson',
 'data/mormonSettlementsUtah.geojson', // This data was used with permission of Brandon Plewe, 2025
-'data/clippedSettlementDensity_SizedDown.geojson',
+'data/clippedSettlementDensity.geojson',
 'data/studyArea.geojson'
 ];  
 
@@ -236,7 +236,7 @@ function loadData(){
                     }
 
                     // Adds the settlement density
-                    else if (path === 'data/clippedSettlementDensity_SizedDown.geojson'){
+                    else if (path === 'data/clippedSettlementDensity.geojson'){
                         settlementDensityData = L.geoJson(json, {
                             interactive: false,
                             style: function (feature) {

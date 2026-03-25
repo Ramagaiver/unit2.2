@@ -1,26 +1,33 @@
+/* Handles core page layout such as height and 
+vertical scrolling (to access the bibliography) */
 html, body {
     height: auto;
     overflow-y: auto;
 }
 
+/* Sets the default font for all text */
 * {
     font-family: Arial, Helvetica, sans-serif;
 }
 
 /* SUMMARY HEADER */
 
-#logo {
+/* In my original submission, the #logo element was meant to be a placeholder, 
+but given additional text to the #sub-title element, this element is no longer necessary*/
+
+/* #logo {
     position: absolute;
     top: 10px;
     left: 10px;
 
     width: 100%; 
     height: 100%;
-}
+} */
 
+/* Position and typography for the main project header */
 #title {
     position: absolute;
-    top: 35px;
+    top: 5px;
     left: 10px; 
     font-family: Arial, Helvetica, sans-serif;
     color: #000; 
@@ -29,9 +36,10 @@ html, body {
     padding: 0;
 }
 
+/* Top-right aligned hypothetical contact information */
 #email {
     position: absolute;
-    top: 35px;
+    top: 5px;
     right: 10px;
     text-align: left;
     vertical-align: top;
@@ -45,11 +53,12 @@ html, body {
     vertical-align: top;
 }
 
+/* fixed width to ensure readability of the research context */
 #sub-title {
     position: absolute;
-    top: 70px;
+    top: 40px;
     left: 10px;
-    width:70%;
+    width:62%;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: normal;
     color: #555;
@@ -60,6 +69,7 @@ html, body {
 
 /* SUMMARY MAP */
 
+/* Defines the map's height and provides a coordinate base for UI overlays */
 #summary-mapArea {
     position: relative;
     height: 80vh;
@@ -68,6 +78,7 @@ html, body {
 
 /* SETTINGS */
 
+/* Contains user toggles for data aggregation and proportionality */
 .settings-container {
     background-color: white;
     position: absolute;
@@ -100,6 +111,7 @@ html, body {
     margin: 0;
 }
 
+/* Toggles visibility of the settings panel */
 #settings-button {
     position: absolute;
     left: 300px;
@@ -122,6 +134,7 @@ html, body {
 
 /* SEQUENCE */
 
+/* Anchors the slider and playback controls to the bottom-left of the viewport */
 #sequence-control-container {
     display: flex;
     align-items: center;
@@ -138,6 +151,7 @@ html, body {
     padding: 5px;
 }
 
+/* Floating display that updates dynamically with the slider */
 #date {
     background-color: white;
     position: absolute;
@@ -151,6 +165,8 @@ html, body {
     border-radius: 4px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Visual styles for temporal playback buttons and slider width */
 
 .sequence-controls {
     margin: 5px;
@@ -174,6 +190,8 @@ html, body {
 #reverse {
     transform: rotate(180deg);
 }
+
+/* ---------------------------------------------------------- */
 
 /* LEGEND */
 
@@ -212,6 +230,7 @@ html, body {
     margin: 0; 
 }
 
+/* Uses flex-column to stack diverse symbology explanations (SVG and Icons) */
 .legend {
     position: absolute;
     bottom: 10px;
@@ -255,10 +274,13 @@ html, body {
     margin: 0;
 }
 
+/* Defines dimensions for proportional circles circles */
 #proportional-legend{
     width: 100%;
     height: 130px;
 }
+
+/* Matches GIS thematic markers for definitive vs approximate sites */
 
 .legend-circle {
     z-index: 1000;
@@ -285,6 +307,11 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+/* ------------------------------------------------------------------- */
+
+/* Grid-like layout for settlement and native band symbols */
+
 #symbol-elements, #native-symbol-elements {
     display: flex;
     flex-direction: row;
@@ -313,6 +340,8 @@ width: 50px;
     font-size: 14px;
 }
 
+/* ----------------------------------------------------- */
+
 /* SUMMARY FOOTER */
 
 #map {
@@ -332,6 +361,7 @@ width: 50px;
     cursor: default;
 }
 
+/* Uses a multi-column layout for bibliography */
 #notes {
     position: relative;
     margin: 10px 10px;
@@ -357,6 +387,7 @@ width: 50px;
     font-weight: bold;
 }
 
+/* Implements a hanging indent for citations */
 .citation {
     display: block;
     margin-bottom: 15px;
@@ -372,6 +403,7 @@ width: 50px;
 
 /* MAP CLASSES */
 
+/* Uses a white stroke (halo) to ensure text readability over various basemaps */
 .my-polygon-label {
     background: transparent;
     border: none;
@@ -385,6 +417,8 @@ width: 50px;
     opacity: 1;
 }
 
+/* Toggles opacity based on whether data is 'Periodized' or 'Approximate' */
+
 .definitive-settlement {
     opacity: 1.0;
 }
@@ -393,10 +427,14 @@ width: 50px;
     opacity: 0.4;
 }
 
+/* ---------------------------------------------------------------------- */
+
 .territory {
     stroke-width: 1px;
     stroke-opacity: 1;
 }
+
+/* Color-coded fills for native bands */
 
 .territory-ute { fill: #ff7800; stroke: #ff7800; fill-opacity: 0.2; }
 .territory-northern-paiute { fill: #7070e5; stroke: #7070e5; fill-opacity: 0.2; }
@@ -412,7 +450,10 @@ width: 50px;
 
 .territory-default { fill: #3388ff; stroke: #3388ff; fill-opacity: 0.5; }
 
+/* ------------------------------------ */
+
 /* SETTLEMENT CLUSTER SYMBOLOGY */
+/* Styling for the Leaflet Marker Cluster plugin */
 
 .settlement-cluster {
     background-color: rgba(97, 165, 245, 1);

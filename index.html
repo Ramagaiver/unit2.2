@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
+    <!-- Meta reference material -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title>Mormon Density Isoline </title>
+        <!-- Site title -->
+        <title>Mormon Density Isoline</title> 
         <meta author="Chanodom Tannarat">
 
+        <!-- References to Leaflet and CSS styles -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
         <link rel="stylesheet" href="css/style.css">
 
+        <!-- References to leaflet marker cluster plugin -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
     </head>
 
+    <!-- Page content -->
     <body>
         <main class="container">
-            <!-- <img src="img/utah_flag.svg" id="logo"> -->
+            <!-- These three elements exist outside of the main body divs -->
             <h1 id="title">Mormon and Native Territoriality: Settlement of Utah, 1847-1900</h1>
             <div id="email">Any questions or requests for data?<br><i>HypotheticalInterName@gmail.com</i></div>
-            <h2 id="sub-title">Browse geographic data from the MormonPlaces database, based on periodized settlement records from 1847 to 1900. Kernel density isolines surrounding Mormon settlements act as a base for future investigation into Mormon interactions with Native bands. However, because these boundaries are derived from density analysis and historical spatial modeling, they are subject to interpretive variance, particularly in regions with sparse documentation or transient site occupation, and are best regarded as hypothetical estimates of territorial extent. By applying these quantitative models to known Mormon settlements, the map compares the expansion of Mormon territory with respect to the Native lands that were dispossessed. Native territories are defined by historical and ethnographic literature as they are described in the mid-19th century, providing a spatial baseline for the scale of Mormon growth.</h2>
+
+            <!-- While called sub-title, this element is more like a brief description of the data -->
+            <h2 id="sub-title">Browse geographic data from the MormonPlaces database, based on periodized settlement records from 1847 to 1900. Kernel density isolines surrounding Mormon settlements act as a base for future investigation into Mormon interactions with Native bands. However, because these boundaries are derived from density analysis and historical spatial modeling, they are subject to interpretive variance, particularly in regions with sparse documentation or transient site occupation, and are best regarded as hypothetical estimates of territorial extent. As you sequence through the settlement expansion, observe the correlation between Mormon density and environmental features like rivers. Ask yourself: What drove the leap-frogging pattern of certain settlements? How did the site extent from Mormon settlements physically restrict the seasonal mobility of the Northern Shoshone or Ute bands? This map serves as a prompt to visually hypothesize the resource competition (rather than purely the proximity of settlemenets) that dictated the territorial dispossession of natives in Utah.</h2>
+            
+            <!-- div responsible for holding all map related elements including overlaid elements like legend and sequence controller -->
             <div id="summary-mapArea">
                 <div id="map"></div>
+
+                <!-- Sequence controller, aka the time series scroll -->
                 <div class="sequence-controller" id="sequence-control-container">
+                    <!-- Sequence controller & its parameters -->
                     <input id="range-slider" type="range" min="1" max="19358" value="19358" step="1"></input>
+
+                    <!-- Forward, pause/play and reverse buttons -->
                     <button class="sequence-controls" id="reverse" title="Reverse"><img class="step-img" src="img/increment_icon.svg" alt="Reverse Icon"></button>
                     <button class="sequence-controls" id="start-stop" title="Play"><img class="step-img" src="img/play.svg" alt="Start-Stop Icon"></button>
                     <button class="sequence-controls" id="forward" title="Forward"><img class="step-img" src="img/increment_icon.svg" alt="Forward Icon"></button>
 
+                    <!-- Dropdown menu for increment selection, impacts the sequence controller -->
                     <select class="sequence-controls" id="sequence-increment">
                         <option value="day">Events every: day</option>
                         <option value="week">Events every: week</option>
@@ -35,11 +52,17 @@
                     </select>
                 </div>
 
+                <!-- Legend container close -->
                 <button type="button" id="legend-button">x</button>
 
+                <!-- Map legend -->
                 <div class="legend" id="legend-container">
                     <p id="legend-title">Legend</p>
+
+                    <!-- This handles all proportional elements in the legend -->
                     <div class="proportional-elements">
+
+                        <!-- Each circle has corresponding text that is manipulated according to its current value in the sequence controller -->
                         <svg class="proportional-elements" id="proportional-legend">
                             <circle class="legend-circle" id="max" r="60" cy="65" cx="61"></circle>
                             <text class="circle-label" x="61" y="32.5">Max</text>
@@ -53,45 +76,68 @@
                             <text class="circle-label" x="61" y="105">Min</text>
                             <text class="circle-text" id="min-date" x="130" y="105">Min Date</text>
                         </svg>
+
                         <p class="legend-labels">Settlement Continuity</p>
                         <p class="legend-text">Proportional symbols indicate the cumulative duration of continuous occupation calculated following definitive establishment. Any abandonment or displacement, whether due to environmental, social, or conflict-driven factors, resets the sites' age until resettlement occurs.</p>
                     </div>
+
+                    <!-- This handles all mormon symbol elements (i.e. approximate vs definitive settlement) in the legend -->
                     <div id="symbol-elements" alt="has-divider">
+
                         <div class="status-item">
                             <img src="img/mormon_settlement.svg" class="legend-icon definitive-settlement" alt="Definitive Icon">
                             <p class="legend-labels">Definitive Site</p>
                         </div>
+
                         <div class="status-item">
                             <img src="img/mormon_settlement.svg" class="legend-icon approximate-settlement" alt="Approximate Icon">
                             <p class="legend-labels">Approximate Site</p>
                         </div>
+
                     </div>
+
+                    <!-- This handles all native-impacting symbol elements (i.e mormon isolines & band boundaries) in the legend -->
                     <div id="native-symbol-elements">
+
                         <div class="status-item">
                             <img src="img/site_extent.svg" class="legend-icon" alt="Native Icon">
                             <p class="legend-labels">Site Extent</p>
                         </div>
+
                         <div class="status-item">
                             <img src="img/natives.svg" class="legend-icon" alt="Native Icon Alt">
                             <p class="legend-labels">Native Bands</p>
+
                         </div>
                     </div>
                 </div>
 
+                <!-- This date placeholder is automatically updated to contain the currently selected date from the sequence controller -->
                 <p id="date">Date Placeholder</p>
+
+                <!-- Settings close button -->
                 <button type ="button" id="settings-button">x</button>
 
+                <!-- Settings container -->
                 <div class="settings-container" id="settings-control">
                     <p id="settings-title">Settings</p>
+
+                    <!-- Aggregate symbols makes use of the leaflet marker cluster plugin -->
                     <label for="cluster-toggle">Aggregate Symbols</label>
                     <input type="checkbox" id="cluster-toggle">
                     <p class="settings-text">The volume and density of sites in certain areas of Utah can easily become overbearing. Consider enabling aggregate symbols to improve readability at smaller scales.</p>
+                    
+                    <!-- Enables/disables symbol proportionality -->
                     <label for="cluster-toggle">Proportional Symbols</label>
                     <input type="checkbox" id="proportional-toggle" checked>
                     <p class="settings-text">Proportional site symbols indicate the duration of continuous occupation.</p>
                 </div>
             </div>
+
+            <!-- Indicates to the reader where the bibliography is located -->
             <div id="scroll-indicator">VVVVVVVVVVVVVVVV &nbsp; References &nbsp; VVVVVVVVVVVVVVVV</div>
+
+            <!-- Bibliography -->
             <div id="notes">
                 <h3 style="column-span: all;">References</h3>
                 <div class="citation">Plewe, Brandon. <i>MormonPlaces: A Database of Historic Mormon Settlement.</i> Brigham Young University, retrieved 2025. Used with permission.</div>
@@ -109,6 +155,7 @@
             </div>
         </main>
 
+        <!-- Script references -->
         <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script type="text/javascript" src="js/main.js"></script>

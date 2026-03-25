@@ -118,16 +118,32 @@ function createPopupContent(feature, layer){
                 let yearRange = Number(endDate.slice(0, 4) - startDate.slice(0, 4))
 
                 if (feature.properties.periodized === true){
-                    popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
-                    `Established on ${startDate}.` + "<br><br>" + 
-                    `Occupied for ${yearRange} years total,` + "<br>" + `${startDate} to ${endDate}.` + "<br><br>" + feature.properties.description + "<br><br>" + 
-                    `Source: ${feature.properties.source}.` + "</p>"
+                    if (endDate === "1900-01-01"){
+                        popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
+                        `Established ${startDate}.` + "<br>" + `Currently occupied as of 1900 for a total of ${yearRange} years.` + "<br><br>" + 
+                        `Source: ${feature.properties.source}.` + "</p>"
+                    }
+
+                    else {
+                        popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
+                        `Established ${startDate}.` + "<br><br>" + 
+                        `Occupied for ${yearRange} years total,` + "<br>" + `${startDate} to ${endDate}.` + "<br><br>" + feature.properties.description + "<br><br>" + 
+                        `Source: ${feature.properties.source}.` + "</p>"
+                    }
                 }
 
                 else {
-                    popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
-                    `Established some time between ${startDate} and ${endDate}` + 
-                    "<br><br>" + feature.properties.description + "<br><br>" + `Source: ${feature.properties.source}.` + "</p>"
+                    if (endDate === "1900-01-01"){
+                        popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
+                        `Established some time between ${startDate} and ${endDate} (within scope).` + 
+                        "<br><br>" + `Approximate establishment.` + "<br><br>" + `Source: ${feature.properties.source}.` + "</p>"
+                    }
+
+                    else {
+                        popupContent += "<p><h2>" + feature.properties.settlement + "</h2>" + 
+                        `Established some time between ${startDate} and ${endDate}` + 
+                        "<br><br>" + `Approximate establishment and disestablishment.` + "<br><br>" + `Source: ${feature.properties.source}.` + "</p>"
+                    }
                 }
 
                 layer.bindPopup(popupContent, { 
